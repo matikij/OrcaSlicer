@@ -201,11 +201,6 @@ if (NOT ZLIB_FOUND)
     include(ZLIB/ZLIB.cmake)
     set(ZLIB_PKG dep_ZLIB)
 endif ()
-set(PNG_PKG "")
-if (NOT PNG_FOUND) 
-    include(PNG/PNG.cmake)
-    set(PNG_PKG dep_PNG)
-endif ()
 set(EXPAT_PKG "")
 if (NOT EXPAT_FOUND) 
     include(EXPAT/EXPAT.cmake)
@@ -213,13 +208,11 @@ if (NOT EXPAT_FOUND)
 endif ()
 
 set(DEP_Boost_COMPONENTS system iostreams filesystem thread log locale regex date_time)
-include(Boost/Boost.cmake)
 
 # The order of includes respects the dependencies between libraries
 include(Cereal/Cereal.cmake)
 include(Qhull/Qhull.cmake)
 include(GLEW/GLEW.cmake)
-include(GLFW/GLFW.cmake)
 include(OpenCSG/OpenCSG.cmake)
 
 include(TBB/TBB.cmake)
@@ -234,33 +227,22 @@ include(CGAL/CGAL.cmake)
 
 include(NLopt/NLopt.cmake)
 
-include(OpenSSL/OpenSSL.cmake)
-
 set(CURL_PKG "")
 if (NOT CURL_FOUND)
     include(CURL/CURL.cmake)
     set(CURL_PKG dep_CURL)
 endif ()
 
-include(JPEG/JPEG.cmake)
-include(TIFF/TIFF.cmake)
-include(wxWidgets/wxWidgets.cmake)
 include(OCCT/OCCT.cmake)
-include(FREETYPE/FREETYPE.cmake)
 
 set(_dep_list
-    dep_Boost
     dep_TBB
     ${CURL_PKG}
-    dep_wxWidgets
     dep_Cereal
     dep_NLopt
     dep_OpenVDB
     dep_OpenCSG
     dep_CGAL
-    dep_OpenSSL
-    dep_GLFW
-    ${PNG_PKG}
     ${ZLIB_PKG}
     ${EXPAT_PKG}
     )
@@ -275,7 +257,6 @@ else()
 endif()
 
 list(APPEND _dep_list "dep_OCCT")
-list(APPEND _dep_list "dep_FREETYPE")
 
 add_custom_target(deps ALL DEPENDS ${_dep_list})
 
